@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="GBK" ?>
+<bpm code="test4a" name="test4aaa" type="cloudWorkflow" description="test4">
+  <start id="1" name="开始节点" g="120,120,40,40">
+    <transition g="289,140;:-15,20" to="3"/>
+  </start>
+  <end id="2" name="结束节点" g="120,400,40,40"/>
+  <autoTask id="3" name="自动节点" g="245,220,88,48" retryMax="5" retryInterVal="60">
+    <transition g="289,420;:-15,20" to="2"/>
+  </autoTask>
+</bpm>

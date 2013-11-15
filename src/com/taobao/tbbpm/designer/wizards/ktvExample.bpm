@@ -1,0 +1,55 @@
+<bpm code="com.taobao.tbbpm.process.ktvExample" name="ktv example" type="process" description="ktv example">
+  <var name="price" description="支付价格" dataType="java.lang.Integer" contextVarName="" defaultValue="" inOutType="return"/>
+  <var name="totalPrice" description="实付价" dataType="java.lang.Integer" contextVarName="" defaultValue="" inOutType="inner"/>
+  <var name="pList" description="人员" dataType="java.util.List" contextVarName="" defaultValue="$arrayList" inOutType="param"/>
+  <start id="1" g="105,16,30,30">
+    <transition g=":-20,30" to="13"/>
+  </start>
+  <decision id="8" name="计算费用" g="76,239,88,48">
+    <transition name="不超过300" g=":-20,30" to="9"/>
+    <transition expression="totalPrice&gt;=300" name="超过300" priority="1" g=":-20,30" to="10"/>
+    <action type="java">
+      <actionHandle clazz="com.taobao.tbbpm.example.MockJavaClazz" method="calPrice">
+        <var name="p1" description="人数" dataType="java.lang.Integer" contextVarName="pList.size()" defaultValue="" inOutType="param"/>
+        <var name="p2" description="价格" dataType="java.lang.Integer" contextVarName="totalPrice" defaultValue="" inOutType="return"/>
+      </actionHandle>
+    </action>
+  </decision>
+  <scriptTask id="9" name="原价" g="136,319,88,48">
+    <transition g=":-20,30" to="12"/>
+    <action type="ql">
+      <actionHandle expression="price*1">
+        <var name="price" description="价格" dataType="java.lang.Integer" contextVarName="totalPrice" defaultValue="" inOutType="param"/>
+        <var name="price" description="价格" dataType="java.lang.Integer" contextVarName="price" defaultValue="" inOutType="return"/>
+      </actionHandle>
+    </action>
+  </scriptTask>
+  <scriptTask id="10" name="9折优惠" g="16,319,88,48">
+    <transition g=":-20,30" to="12"/>
+    <action type="ql">
+      <actionHandle expression="(round(price*0.9,0)).intValue()">
+        <var name="price" description="价格" dataType="java.lang.Integer" contextVarName="totalPrice" defaultValue="" inOutType="param"/>
+        <var name="price" description="价格" dataType="java.lang.Integer" contextVarName="price" defaultValue="" inOutType="return"/>
+      </actionHandle>
+    </action>
+  </scriptTask>
+  <end id="11" name="结束" g="105,479,30,30"/>
+  <autoTask id="12" name="付款" g="76,399,88,48">
+    <transition g=":-20,30" to="11"/>
+    <action type="java">
+      <actionHandle clazz="com.taobao.tbbpm.example.MockSpringBean" method="payMoney">
+        <var name="p1" description="价格" dataType="java.lang.Integer" contextVarName="price" defaultValue="" inOutType="param"/>
+      </actionHandle>
+    </action>
+  </autoTask>
+  <loopProcess id="13" name="循环节点" g="21,78,198,129" collectionVarName="pList" variableName="p" indexVarName="i" loopStartId="13-1" loopEndId="13-1">
+    <transition g=":-20,30" to="8"/>
+    <autoTask id="13-1" name="每人唱一首歌" g="77,112,88,48">
+      <action type="spring-bean">
+        <actionHandle bean="springService" clazz="com.taobao.tbbpm.example.MockSpringBean" method="sing">
+          <var name="p1" description="" dataType="java.lang.String" contextVarName="p" defaultValue="" inOutType="param"/>
+        </actionHandle>
+      </action>
+    </autoTask>
+  </loopProcess>
+</bpm>

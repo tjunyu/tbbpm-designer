@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            id = "com.taobao.tbbpm.designer.wizards.NewBPProcessWizard"
+            name = "Tbbpm Process Example"
+            class="com.taobao.tbbpm.designer.wizards.NewBPProcessWizard"
+            category="org.eclipse.wst.TBBPMCategory"
+            icon="icons/gif-0054.gif">
+         <description>创建新的tbbpm流程</description>
+      </wizard>
+      <category
+            id="org.eclipse.wst.TBBPMCategory"
+            name="TBBPM">
+      </category>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="TAOBAO BPM Editor"
+            extensions="bpm,xml"
+            icon="icons/process_cn_16.png"
+            contributorClass="com.taobao.tbbpm.designer.editors.MultiPageEditorContributor"
+            class="com.taobao.tbbpm.designer.editors.MultiPageEditor"
+            id="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+      </editor>
+   </extension>
+   
+    <extension point="org.eclipse.ui.preferencePages">
+   		 <page name="tbbpm配置"
+          class="com.taobao.tbbpm.designer.preferences.Tbbpmpreferences"
+          id="com.taobao.tbbpm.designer.preferences.Bppreferences"/>
+  </extension>
+  
+  <extension point="org.eclipse.ui.perspectives">
+      <perspective name="tbbpm流程视图"
+                   icon="icons/gif-0054.gif"
+                   class="com.taobao.tbbpm.designer.perspectives.MyBpPerspectives"
+                   id="com.taobao.tbbpm.designer.perspectives.MyBpPerspectives"/>
+  </extension>
+  
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="false"
+            id="com.taobao.tbpm.designer.gui.unitTestContribution"
+            nameFilter="*.bpm"
+            objectClass="org.eclipse.core.resources.IFile">
+         <menu
+               id="com.taobao.tbpm.designer.gui.menu1"
+               label="生成流程测试代码"
+               path="additions">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="com.taobao.tbbpm.designer.action.GenerateProcessTestClassAction"
+               enablesFor="1"
+               id="com.taobao.tbbpm.designer.action.GenerateProcessTestClassAction"
+               label="生成junit测试代码"
+               menubarPath="com.taobao.tbpm.designer.gui.menu1/group1">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.taobao.tbbpm.designer.editors.view.NodePropertyView"
+            icon="icons/shuxing.png"
+            id="com.taobao.tbbpm.designer.NodePropertyView"
+            name="NodePropertyView"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            id="com.taobao.tbbpm.designer.action.VerticalAutoLayoutAction"
+            targetID="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <action
+               class="com.taobao.tbbpm.designer.action.VerticalAutoLayoutAction"
+               icon="icons/processV.gif"
+               id="com.taobao.tbbpm.designer.action.VerticalAutoLayoutAction"
+               label="Vertical Auto Layout "
+               toolbarPath="Toolbar"
+               tooltip="Vertical Auto Layout ">
+         </action>
+      </editorContribution>
+      <editorContribution
+            id="com.taobao.tbbpm.designer.action.HorizontalAutoLayoutAction"
+            targetID="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <action
+               class="com.taobao.tbbpm.designer.action.HorizontalAutoLayoutAction"
+               icon="icons/process.gif"
+               id="HorizontalAutoLayoutAction"
+               label="Horizontal Auto Layout "
+               style="push"
+               toolbarPath="Toolbar"
+               tooltip="Horizontal Auto Layout ">
+         </action>
+      </editorContribution>
+      <editorContribution
+            id="com.taobao.tbbpm.designer.action.SvgExportAction"
+            targetID="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <action
+               class="com.taobao.tbbpm.designer.action.SvgExportAction"
+               id="SvgExportAction"
+               label="svg文件"
+               style="push"
+               toolbarPath="Toolbar"
+               tooltip="Svg Export">
+         </action>
+      </editorContribution>
+      <editorContribution
+            id="com.taobao.tbbpm.designer.action.JpgExportAction"
+            targetID="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <action
+               class="com.taobao.tbbpm.designer.action.JpgExportAction"
+               id="SvgExportAction"
+               label="svg图片"
+               style="push"
+               toolbarPath="Toolbar"
+               tooltip="svg Jpg Export">
+         </action>
+      </editorContribution>
+      <editorContribution
+            id="com.taobao.tbbpm.designer.action.PngExportAction"
+            targetID="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <action
+               class="com.taobao.tbbpm.designer.action.PngExportAction"
+               id="pngExportAction"
+               label="原生图片"
+               style="push"
+               toolbarPath="Toolbar"
+               tooltip="png Export">
+         </action>
+      </editorContribution>
+   </extension>
+<!--
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor
+            contributorId="com.taobao.tbbpm.designer.editors.MultiPageEditor"
+            typeMapper="com.taobao.tbbpm.designer.editors.view.MyTypeMapper">
+         <propertyCategory
+               category="sample"></propertyCategory>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs
+            contributorId="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <propertyTab
+               category="sample"
+               id="com.taobao.tbbpm.designer.editors.ProprotyTab"
+               label="Proproty">
+         </propertyTab>
+      </propertyTabs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections
+            contributorId="com.taobao.tbbpm.designer.editors.MultiPageEditor">
+         <propertySection
+               class="org.eclipse.ui.views.properties.tabbed.AdvancedPropertySection"
+               id="com.taobao.tbbpm.designer.editors.ProprotySection"
+               tab="com.taobao.tbbpm.designer.editors.ProprotyTab">
+            <input
+                  type="com.taobao.tbbpm.designer.editors.core.ElementWrapper">
+            </input>
+         </propertySection>
+      </propertySections>
+   </extension>
+   -->
+</plugin>
